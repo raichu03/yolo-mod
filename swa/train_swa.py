@@ -68,12 +68,12 @@ def main(data_path: str, model_path: str, save_dir: str, epochs: int, base_epoch
         ### Save the SWA model periodically
         if epoch % 6 == 0:
             swa_model_path = f"{save_dir}/swa_model_{epoch}.pt"
-            torch.save(swa_model.module.state_dict(), swa_model_path)
+            model.save(swa_model_path)
             print(f"\nSWA model saved at {swa_model_path}\n")
     
     ### Save the final SWA model
     final_swa_path = f"{save_dir}/final_swa_model.pt"
-    torch.save(swa_model.module.state_dict(), final_swa_path)
+    model.save(final_swa_path)
     print(f"\nFinal SWA model saved at {final_swa_path}\n")
     
     print("\n Training Completed!!!\n")

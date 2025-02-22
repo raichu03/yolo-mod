@@ -45,6 +45,7 @@ def main(dir_path: str, img_path: str):
         all_boxes.append(norm_boxes.tolist())
         all_scores.append(scores.tolist())
         all_labels.append(labels.tolist())
+        
 
     # Aggregate predictions using Weighted Box Fusion (WBF)
     iou_thr = 0.5
@@ -85,10 +86,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Train YOLOv8 with custom parameters")
 
     parser.add_argument("--models_path", type=str, default="fge_checkpoints", help="Path to saved models")
-    parser.add_argument("--img_path", type=str, default="", help="Path to test image")
+    parser.add_argument("--img_path", type=str, default="human.jpg", help="Path to test image")
 
     args = parser.parse_args()
-    # print(args)
     
     main(dir_path=args.models_path, 
          img_path=args.img_path)
