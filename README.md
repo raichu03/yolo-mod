@@ -73,3 +73,10 @@ The arguments to pass duiing training are:
 * `--max_lr` : The base higher learning rate for training. The code defaults to **0.01**.
 
 The model checkpoints are saved in the directory passed in the argument.
+
+### Testing the SWA model on the test dataset
+To test the SWA model on the test dataset, you can use the following command. Run this command from the home directory of the project:
+
+```bash
+python test_swa.py --model_path path_to_model.pt --img_path your_test_image_path.jpg --num_passes number_of_forward_passes
+```
