@@ -4,6 +4,7 @@ import numpy as np
 from ultralytics import YOLO
 import torch
 from ensemble_boxes import weighted_boxes_fusion
+import argparse
 
 def augment_image(image, hsv_shift: int, blur_ksize:int, noise_std: int, contrast_alpha: int, contrast_beta: int):
     
@@ -131,7 +132,15 @@ def main(model_path: str, image_path: str, num_passes: int):
     
 if __name__ == '__main__':
     
-    MODEL_PATH = 'swa_checkpoints/final_swa_model.pt'
-    IMG_PATH = 'human.jpg'
-    NUM_PASSES = 10
-    main(MODEL_PATH, IMG_PATH)
+    ### Taking input arguments from the user
+    parser = argparse.ArgumentParser(description="Train YOLOv8 with custom parameters")
+
+    parser.add_argument("--model_path", type=str, default="", help="Path to the model `model.pt`")
+    parser.add_argument("--img_path", type=str, default="", help="Path to the test image")
+    parser.add_argument("--num_passes", type=int, default=10, help="Number of passes for Bayesian Dropout")
+
+    args = parser.parse_args()
+    
+    main(model_path=args.model_path,
+         image_path=args.img_path,
+         num_passes=args.num_passes)

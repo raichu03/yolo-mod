@@ -11,7 +11,7 @@ from ultralytics.data import YOLODataset
 
 logging.getLogger("ultralytics").setLevel(logging.WARNING)
 
-def main(data_path: str, model_path: str, save_dir: str, epochs: int, base_epoch: int, batch_size: int, image_size: int):
+def main(data_path: str, model_path: str, save_dir: str, epochs: int, base_epoch: int, batch_size: int, image_size: int, base_lr: float, max_lr: float):
     
     os.makedirs(save_dir, exist_ok=True) ## Create save directory if it does not exist
     model = YOLO(model_path) ## Load model
@@ -21,8 +21,8 @@ def main(data_path: str, model_path: str, save_dir: str, epochs: int, base_epoch
                                 lr=0.01, 
                                 momentum=0.9)
     scheduler = CyclicLR(optimizer, 
-                         base_lr=0.0001, 
-                         max_lr=0.01, 
+                         base_lr=base_lr, 
+                         max_lr=max_lr, 
                          step_size_up=3, 
                          mode='triangular')
     
@@ -89,6 +89,8 @@ if __name__ == "__main__":
     parser.add_argument("--base_epoch", type=int, default=10, help="Base epoch for SWA")
     parser.add_argument("--batch_size", type=int, default=8, help="Batch size for training")
     parser.add_argument("--image_size", type=int, default=416, help="Image size for training")
+    parser.add_argument("--base_lr", type=float, default=0.0001, help="low learning rate for FGE")
+    parser.add_argument("--max_lr", type=float, default=0.01, help="high learning rate for FGE")
 
     args = parser.parse_args()
     
@@ -98,4 +100,6 @@ if __name__ == "__main__":
          epochs=args.epochs,
          base_epoch= args.base_epoch,
          batch_size=args.batch_size,
-         image_size=args.image_size)
+         image_size=args.image_size,
+         base_lr=args.base_lr,
+         max_lr=args.max_lr)
