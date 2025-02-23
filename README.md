@@ -80,3 +80,5 @@ To test the SWA model on the test dataset, you can use the following command. Ru
 ```bash
 python test_swa.py --model_path path_to_model.pt --img_path your_test_image_path.jpg --num_passes number_of_forward_passes
 ```
+
+This test script will also run the custom TTA methods using Albumentations library. Users can define their custom function to apply TTA on the test image.
